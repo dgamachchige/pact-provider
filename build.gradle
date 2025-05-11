@@ -1,0 +1,50 @@
+plugins {
+	id 'org.springframework.boot' version '2.7.1'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id 'au.com.dius.pact' version '3.5.23'
+}
+
+group = 'com.dilan'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	compileOnly 'org.projectlombok:lombok'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	annotationProcessor 'org.projectlombok:lombok'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation("au.com.dius:pact-jvm-provider-spring_2.12:3.5.24")
+	testImplementation("au.com.dius:pact-jvm-provider-junit_2.12:3.5.24")
+}
+
+tasks.named('test') {
+	systemProperty 'pact.verifier.publishResults', 'true'
+//	useJUnitPlatform()
+}
+
+//pact {
+//	serviceProviders {
+//		provider {
+//			protocol = 'http'
+//			host = 'localhost'
+//			port = 8080
+//			path = '/'
+//			hasPactsFromPactBroker {
+//				pactBrokerUrl = 'http://localhost:9292'
+//			}
+//		}
+//	}
+//}
+
